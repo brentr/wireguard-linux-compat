@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0
 #
 # Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+# revised:  2/25/25 brent@mbari.org
 
 KERNELRELEASE ?= $(shell uname -r)
 KERNELDIR ?= /lib/modules/$(KERNELRELEASE)/build
+INSTALL_MOD_DIR ?= kernel/drivers/net/wireguard
 PREFIX ?= /usr
 DESTDIR ?=
 SRCDIR ?= $(PREFIX)/src
@@ -32,7 +34,7 @@ clean:
 	@$(MAKE) -C $(KERNELDIR) M=$(PWD) clean
 
 module-install:
-	@$(MAKE) -C $(KERNELDIR) M=$(PWD) WIREGUARD_VERSION="$(WIREGUARD_VERSION)" modules_install
+	@$(MAKE) -C $(KERNELDIR) M=$(PWD) WIREGUARD_VERSION="$(WIREGUARD_VERSION)" INSTALL_MOD_DIR="$(INSTALL_MOD_DIR)" modules_install
 	$(DEPMOD) -b "$(DEPMODBASEDIR)" -a $(KERNELRELEASE)
 
 install: module-install
@@ -57,3 +59,6 @@ cloc:
 -include tests/debug.mk
 
 .PHONY: all module module-debug module-install install dkms-install clean cloc check style
+
+#display list of makefiles processed
+#$(info MAKEFILE_LIST == $(MAKEFILE_LIST))
