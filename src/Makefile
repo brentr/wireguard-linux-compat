@@ -5,7 +5,7 @@
 
 KERNELRELEASE ?= $(shell uname -r)
 KERNELDIR ?= /lib/modules/$(KERNELRELEASE)/build
-INSTALL_MOD_DIR ?= kernel/drivers/net/wireguard
+INSTALL_MOD_DIR ?= kernel/net/wireguard
 PREFIX ?= /usr
 DESTDIR ?=
 SRCDIR ?= $(PREFIX)/src
